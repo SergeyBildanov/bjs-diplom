@@ -1,6 +1,13 @@
 "use strict"
 
-
+function getStocks(){
+    ApiConnector.getStocks(response => {
+        if(response.success === true){
+            myRatesBoard.clearTable();
+            myRatesBoard.fillTable(response.data);
+        }
+    });
+}
 let myLogoutButton = new LogoutButton();
 myLogoutButton.action = () => ApiConnector.logout((response) => {
     if(response.success === true){
@@ -15,12 +22,8 @@ ApiConnector.current(response =>{
 });
 
 let myRatesBoard = new RatesBoard();
-setInterval(ApiConnector.getStocks(response => {
-    if(response.success === true){
-        myRatesBoard.clearTable();
-        myRatesBoard.fillTable(response.data);
-    }
-} ), 60000);
+getStocks();
+setInterval(getStocks, 60000);
 
 let myMoneyManager = new MoneyManager();
 myMoneyManager.addMoneyCallback = data => ApiConnector.addMoney(data, response => {

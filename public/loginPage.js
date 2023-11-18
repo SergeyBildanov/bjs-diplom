@@ -6,14 +6,14 @@ userForm.loginFormCallback = data => ApiConnector.login(data, response => {
         location.reload();
     }
     else{
-        alert(response.error);
+        userForm.setLoginErrorMessage(response.error);
     }
 });
 userForm.registerFormCallback = data => ApiConnector.register(data, response => {
-    if(response.success === false){
-        alert(response.error);
+    if(response.success === true){
+        location.reload();
     }
     else{
-        location.reload();
+        userForm.setRegisterErrorMessage(response.error);
     }
 });
